@@ -83,3 +83,6 @@ function addToDo(){
     render();
     saveTodos();
 }
+
+addBtn.addEventListener("click", addToDo);
+render();
