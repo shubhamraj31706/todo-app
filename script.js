@@ -1,0 +1,62 @@
+//Select DOM elements
+
+const input = document.querySelector("#todo-input");
+const addBtn = document.querySelector("#add-btn");
+const list = document.querySelector("#todo-list");
+
+//Try to load saved todos from localStorage(if any)
+
+const saved = localStorage.getItem("todos");
+const todos = saved? JSON.parse(saved) : [];
+
+function saveTodos(){
+    //Save current todos array into localStorage
+    localStorage.setItem("todos", JSON.stringify(todos));
+}
+
+//Create a todo node for a todo object and append it to the list
+function createToDoNode(todo, index){
+    const li = document.createElement("li");
+
+    //checkbox to toggle completion
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = !!todo.completed;
+    checkbox.addEventListener("change", () => {
+        todo.completed = checkbox.checked;
+        saveTodos();
+    })
+
+    //Text of the todo
+    const textSpan = document.createElement("span");
+    textSpan.textContent = todo.text;
+    textSpan.style.margin = "0 8px";
+    if(todo.completed){
+        textSpan.style.textDecoration = "line-through";
+
+        //Add double click event listner to edit todo
+        textSpan.addEventListener("dblclick", () => {
+            const newText = prompt("Edit todo", todo.text);
+            if(newText != null){
+                todo.text = newText.trim();
+                textSpan.textContent = todo.text;
+                saveTodos();
+            }
+        })
+
+        //Delete Todo Button
+        
+    }
+
+}
+
+//Render the whole todo list from todos array
+function render(){
+    list.innerHTML = "";
+
+    //Recreate each item
+    todos.forEach((todo, index) => {
+        const node = createToDoNode(todo, index);
+        list.appendChild(node);
+    });
+}
