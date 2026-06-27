@@ -45,7 +45,13 @@ function createToDoNode(todo, index){
         })
 
         //Delete Todo Button
-        
+        const delBtn = document.createElement("button");
+        delBtn.textContent = "Delete";
+        delBtn.addEventListener("click", () => {
+            todos.splice(index, 1);
+            render();
+            saveTodos();
+        })
     }
 
 }
