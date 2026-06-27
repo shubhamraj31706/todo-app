@@ -52,6 +52,12 @@ function createToDoNode(todo, index){
             render();
             saveTodos();
         })
+
+        li.appendChild(checkbox);
+        li.appendChild(textSpan);
+        li.appendChild(delBtn);
+
+        return li;
     }
 
 }
@@ -65,4 +71,15 @@ function render(){
         const node = createToDoNode(todo, index);
         list.appendChild(node);
     });
+}
+
+function addToDo(){
+    const text = input.value.trim();
+    if(!text) return;
+
+    //Push a new Todo Object
+    todos.push({text, completed: false});
+    input.value = "";
+    render();
+    saveTodos();
 }
