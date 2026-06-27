@@ -24,6 +24,8 @@ function createToDoNode(todo, index){
     checkbox.checked = !!todo.completed;
     checkbox.addEventListener("change", () => {
         todo.completed = checkbox.checked;
+
+        textSpan.style.textDecoration = todo.completed? "line-through": "";
         saveTodos();
     })
 
@@ -33,7 +35,7 @@ function createToDoNode(todo, index){
     textSpan.style.margin = "0 8px";
     if(todo.completed){
         textSpan.style.textDecoration = "line-through";
-
+    }
         //Add double click event listner to edit todo
         textSpan.addEventListener("dblclick", () => {
             const newText = prompt("Edit todo", todo.text);
@@ -58,7 +60,7 @@ function createToDoNode(todo, index){
         li.appendChild(delBtn);
 
         return li;
-    }
+    
 
 }
 
@@ -85,4 +87,9 @@ function addToDo(){
 }
 
 addBtn.addEventListener("click", addToDo);
+input.addEventListener("keydown", (e) => {
+    if(e.key == "Enter"){
+        addToDo();
+    }
+})
 render();
